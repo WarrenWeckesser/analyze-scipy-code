@@ -44,9 +44,9 @@ without_override = sorted(set(dist_names) - set(with_override))
 print(f'SciPy version {scipy.__version__}')
 print()
 
-print(f"Distributions that override {target}:")
+print(f"Continuous univariate distributions that override {target}:")
 print_names(with_override)
 
 print()
-print(f"Distributions that do not override {target}:")
+print(f"Continuous univariate distributions that do not override {target}:")
 print_names(without_override)
