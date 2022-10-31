@@ -29,24 +29,40 @@ def overrides(name, target):
     return instance_method != class_method
 
 
-if len(sys.argv) != 2:
-    print(f"use: {sys.argv[0]} method_name")
+if len(sys.argv) < 2:
+    print(f"use: {sys.argv[0]} method_name [method_name2 method_name3 ...]")
     sys.exit(-1)
-
-
-target = sys.argv[1]
-
-dist_names = [name for name in dir(_continuous_distns)
-              if isinstance(getattr(_continuous_distns, name), rv_continuous)]
-with_override = [name for name in dist_names if overrides(name, target)]
-without_override = sorted(set(dist_names) - set(with_override))
 
 print(f'SciPy version {scipy.__version__}')
 print()
 
-print(f"Continuous univariate distributions that override {target}:")
-print_names(with_override)
+dist_names = [name for name in dir(_continuous_distns)
+              if isinstance(getattr(_continuous_distns, name), rv_continuous)]
 
-print()
-print(f"Continuous univariate distributions that do not override {target}:")
-print_names(without_override)
+if len(sys.argv) == 2:
+    target = sys.argv[1]
+    dist_names = [name for name in dir(_continuous_distns)
+                  if isinstance(getattr(_continuous_distns, name),
+                                rv_continuous)]
+    with_override = [name for name in dist_names if overrides(name, target)]
+    without_override = sorted(set(dist_names) - set(with_override))
+
+    print(f"Continuous univariate distributions that override {target}:")
+    print_names(with_override)
+
+    print()
+    print("Continuous univariate distributions that do not override "
+          f"{target}:")
+    print_names(without_override)
+else:
+    # More than one argument on the command line.
+    # Make a table with checkboxes for the methods that are overridden.
+    print(f'{"distribution":21s}', end='')
+    for method in sys.argv[1:]:
+        print(f'{method:5}', end='')
+    print()
+    for name in dist_names:
+        print(f'{name:21s}', end='')
+        for method in sys.argv[1:]:
+            print(f'{"☑" if overrides(name, method) else "☐":5}', end='')
+        print()
