@@ -21,7 +21,8 @@ def is_missing_import_np(docstring):
             'import numpy as np' not in examples_section)
 
 
-modules = ['cluster.hierarchy', 'cluster.vq', 'constants', 'fft', 'fftpack',
+modules = ['cluster.hierarchy', 'cluster.vq', 'constants', 'datasets',
+           'fft', 'fftpack',
            'integrate', 'interpolate', 'io', 'io.arff', 'io.wavfile',
            'linalg', 'misc', 'ndimage', 'odr', 'optimize',
            'signal', 'signal.windows',

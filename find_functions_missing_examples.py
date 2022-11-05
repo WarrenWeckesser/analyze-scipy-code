@@ -12,7 +12,7 @@ from scipy._lib.uarray import _Function
 
 
 # Note: fftpack is intentionally not included.
-modules = ['cluster.hierarchy', 'cluster.vq', 'constants', 'fft',
+modules = ['cluster.hierarchy', 'cluster.vq', 'constants', 'datasets', 'fft',
            'integrate', 'interpolate', 'io', 'io.arff', 'io.wavfile',
            'linalg', 'misc', 'ndimage', 'odr', 'optimize',
            'signal', 'signal.windows',

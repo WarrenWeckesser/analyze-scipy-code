@@ -132,7 +132,7 @@ def module_objects(module_name, include_classes=True):
                     yield ('.'.join([name, cls_attr]), cls_obj)
 
 
-all_modules = ['cluster.hierarchy', 'cluster.vq', 'constants',
+all_modules = ['cluster.hierarchy', 'cluster.vq', 'constants', 'datasets',
                'fft', 'fftpack', 'integrate', 'interpolate',
                'io', 'io.arff', 'io.wavfile',
                'linalg', 'misc', 'ndimage', 'odr', 'optimize',
