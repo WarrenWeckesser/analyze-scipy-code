@@ -29,7 +29,10 @@ modules = ['cluster.hierarchy', 'cluster.vq', 'constants', 'datasets',
            'sparse', 'sparse.linalg', 'sparse.csgraph', 'spatial',
            'special', 'stats', 'stats.contingency', 'stats.mstats']
 
-skip = ['integrate.trapezoid', 'integrate.trapz', 'special.sinc']
+# These are actually NumPy functions.
+skip = ['integrate.trapezoid', 'integrate.trapz', 'special.sinc',
+        'fftpack.fftfreq', 'fftpack.fftshift', 'fftpack.ifftshift',
+        'fft.fftfreq', 'fft.fftshift', 'fft.ifftshift', 'fft.rfftfreq']
 
 print(f"scipy version {scipy.__version__}")
 print()
