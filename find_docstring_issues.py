@@ -138,7 +138,8 @@ all_modules = ['cluster.hierarchy', 'cluster.vq', 'constants', 'datasets',
                'linalg', 'misc', 'ndimage', 'odr', 'optimize',
                'signal', 'signal.windows',
                'sparse', 'sparse.linalg', 'sparse.csgraph',
-               'spatial', 'special',
+               'spatial', 'spatial.distance', 'spatial.transform',
+               'special',
                'stats', 'stats.contingency', 'stats.mstats']
 
 # These are actually NumPy functions.

@@ -16,7 +16,8 @@ modules = ['cluster.hierarchy', 'cluster.vq', 'constants', 'datasets', 'fft',
            'integrate', 'interpolate', 'io', 'io.arff', 'io.wavfile',
            'linalg', 'misc', 'ndimage', 'odr', 'optimize',
            'signal', 'signal.windows',
-           'sparse', 'sparse.linalg', 'sparse.csgraph', 'spatial',
+           'sparse', 'sparse.linalg', 'sparse.csgraph',
+           'spatial', 'spatial.distance', 'spatial.transform',
            'special', 'stats', 'stats.contingency', 'stats.mstats']
 
 skip = ['integrate.cumtrapz', 'integrate.simps', 'integrate.trapz',
