@@ -12,7 +12,7 @@ _docstring_sections = [
     ('Parameters', True),
     ('Returns', True),
     ('Yields', False),
-    ('Recieves', False),
+    ('Receives', False),
     ('Other Parameters', False),
     ('Raises', False),
     ('Warns', False),
