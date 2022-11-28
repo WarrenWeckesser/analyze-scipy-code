@@ -142,10 +142,14 @@ all_modules = ['cluster.hierarchy', 'cluster.vq', 'constants', 'datasets',
                'special',
                'stats', 'stats.contingency', 'stats.mstats']
 
-# These are actually NumPy functions.
-skip = ['integrate.trapezoid', 'integrate.trapz', 'special.sinc',
-        'fftpack.fftfreq', 'fftpack.fftshift', 'fftpack.ifftshift',
-        'fft.fftfreq', 'fft.fftshift', 'fft.ifftshift', 'fft.rfftfreq']
+skip = [
+    # These are actually NumPy functions:
+    'integrate.trapezoid', 'integrate.trapz', 'special.sinc',
+    'fftpack.fftfreq', 'fftpack.fftshift', 'fftpack.ifftshift',
+    'fft.fftfreq', 'fft.fftshift', 'fft.ifftshift', 'fft.rfftfreq',
+    # These are deprecated names:
+    'integrate.cumtrapz', 'integrate.simps',
+]
 
 if __name__ == "__main__":
     import sys
