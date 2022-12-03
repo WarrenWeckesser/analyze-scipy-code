@@ -1,7 +1,7 @@
 Assorted scripts that I use to analyze the SciPy source code.
 
 * `dists_that_override.py`: Display which of the SciPy univariate continuous
-  distributions override the given method names. For example,::
+  distributions override the given method names. For example,
 
       $ python3 dists_that_override.py _cdf _ppf _sf _isf _rvs
       SciPy version 1.10.0.dev0+2299.5beb395
