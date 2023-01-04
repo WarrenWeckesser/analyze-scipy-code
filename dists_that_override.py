@@ -76,8 +76,9 @@ def main():
         print(f'{"distribution":21s}', end='')
         if args.support:
             print(f'{"support":16s}  ', end='')
+        w = 1 + max([len(meth) for meth in args.method])
         for method in args.method:
-            print(f'{method:5}', end='')
+            print(f'{method:{w}}', end='')
         print()
         for name in dist_names:
             dist = getattr(scipy.stats, name)
@@ -89,7 +90,7 @@ def main():
                 # Show the default support.
                 print(f'[{dist.a:6.3g}, {dist.b:6.3g}]   ', end='')
             for method in args.method:
-                print(f'{"☑" if overrides(name, method) else "☐":5}', end='')
+                print(f'{"☑" if overrides(name, method) else "☐":{w}}', end='')
             print()
 
 
