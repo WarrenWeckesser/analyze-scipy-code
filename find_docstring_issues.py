@@ -40,7 +40,7 @@ def get_headings(docstring):
     return result
 
 
-def check_headings(docstring):
+def check_headings(docstring, args):
     result = []
     headings_found = get_headings(docstring)
     if "See also" in headings_found:
@@ -52,7 +52,8 @@ def check_headings(docstring):
     for k, (heading, req) in enumerate(_docstring_sections):
         n = headings_found.count(heading)
         if n == 0 and req:
-            result.append(f"missing section: '{heading}'")
+            if heading != 'Returns' or not args.ignore_missing_returns:
+                result.append(f"missing section: '{heading}'")
         if n > 0:
             if n > 1:
                 result.append(f"repeated section: '{heading}'")
@@ -152,16 +153,20 @@ skip = [
 ]
 
 if __name__ == "__main__":
-    import sys
-
-    if len(sys.argv) > 1:
-        modules = sys.argv[1:]
-    else:
-        modules = all_modules
+    # import sys
+    import argparse
+    parser = argparse.ArgumentParser(
+        prog='find_docstring_issues.py',
+        description=('Check SciPy functions for docstring issues'),
+    )
+    parser.add_argument('modules', nargs='*', default=all_modules)
+    parser.add_argument('-i', '--ignore-missing-returns', action='store_true',
+                        help="Ignore missing 'Returns' section.")
+    args = parser.parse_args()
 
     print(f"scipy version {scipy.__version__}")
 
-    for module_name in modules:
+    for module_name in args.modules:
         print()
         print(f"=== {module_name} ===")
         for obj_name, obj in module_objects(module_name,
@@ -169,7 +174,7 @@ if __name__ == "__main__":
             full_name = module_name + '.' + obj_name
             if full_name not in skip:
                 docstring = obj.__doc__
-                sections_issues = check_headings(docstring)
+                sections_issues = check_headings(docstring, args)
                 missing_import_np = is_missing_import_np(docstring)
                 dup_imports = find_duplicate_imports_in_examples(docstring)
                 if sections_issues or missing_import_np or dup_imports:
