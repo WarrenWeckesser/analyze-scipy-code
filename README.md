@@ -57,3 +57,26 @@ Assorted scripts that I use to analyze the SciPy source code.
 
 * `extract_example_code.py`: Extract the code from the 'Examples' section
   of the SciPy object.
+
+  For example,
+
+      $ python extract_example_code.py scipy.special.logsumexp
+      Code from the 'Examples' section of scipy.special.logsumexp written to 'example_logsumexp.py'.
+      $ cat example_logsumexp.py
+      # Python code extracted from the 'Examples' section of
+      # scipy.special.logsumexp
+
+      import numpy as np
+      from scipy.special import logsumexp
+      a = np.arange(10)
+      logsumexp(a)
+      np.log(np.sum(np.exp(a)))
+      a = np.arange(10)
+      b = np.arange(10, 0, -1)
+      logsumexp(a, b=b)
+      np.log(np.sum(b*np.exp(a)))
+      logsumexp([1,2],b=[1,-1],return_sign=True)
+      a = np.ma.array([np.log(2), 2, np.log(3)],
+                      mask=[False, True, False])
+      b = (~a.mask).astype(int)
+      logsumexp(a.data, b=b), np.log(5)

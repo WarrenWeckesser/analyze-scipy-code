@@ -27,7 +27,7 @@ docstring = obj.__doc__
 has_plot = False
 has_show = False
 ds = NumpyDocString(docstring)
-code = ['import numpy as np']
+code = []
 for line in ds['Examples']:
     line = line.strip()
     if line.startswith('>>> ') or line.startswith('... '):
@@ -45,6 +45,7 @@ with open(filename, 'w') as f:
     f.write(f"# Python code extracted from the 'Examples' section of\n"
             f"# {fullname}\n\n")
     f.write('\n'.join(code))
+    f.write('\n')
 
 print(f"Code from the 'Examples' section of {fullname} "
       f"written to '{filename}'.")
