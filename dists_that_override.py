@@ -90,7 +90,7 @@ def main():
                 # Show the default support.
                 print(f'[{dist.a:6.3g}, {dist.b:6.3g}]   ', end='')
             for method in args.method:
-                print(f'{"☑" if overrides(name, method) else "☐":{w}}', end='')
+                print(f'{"✔" if overrides(name, method) else "-":{w}}', end='')
             print()
 
 

@@ -4,22 +4,22 @@ Assorted scripts that I use to analyze the SciPy source code.
   distributions override the given method names. For example,
 
       $ python dists_that_override.py _cdf _ppf _sf _isf _rvs
-      SciPy version 1.10.0.dev0+2299.5beb395
+      SciPy version 1.11.0.dev0+1566.d5ceb77
 
       distribution         _cdf _ppf _sf  _isf _rvs
-      alpha                ☑    ☑    ☐    ☐    ☐
-      anglit               ☑    ☑    ☐    ☐    ☐
-      arcsine              ☑    ☑    ☐    ☐    ☐
-      argus                ☑    ☐    ☑    ☐    ☑
-      beta                 ☑    ☑    ☑    ☑    ☑
-      betaprime            ☑    ☐    ☐    ☐    ☑
-      bradford             ☑    ☑    ☐    ☐    ☐
-      burr                 ☑    ☑    ☑    ☐    ☐
+      alpha                ✔    ✔    -    -    -
+      anglit               ✔    ✔    -    -    -
+      arcsine              ✔    ✔    -    -    -
+      argus                ✔    -    ✔    -    ✔
+      beta                 ✔    ✔    ✔    ✔    ✔
+      betaprime            ✔    ✔    -    -    ✔
+      bradford             ✔    ✔    -    -    -
+      burr                 ✔    ✔    ✔    -    -
       [...]
-      wald                 ☑    ☑    ☑    ☑    ☑
-      weibull_max          ☑    ☑    ☑    ☐    ☐
-      weibull_min          ☑    ☑    ☑    ☐    ☐
-      wrapcauchy           ☑    ☑    ☐    ☐    ☐
+      wald                 ✔    ✔    ✔    ✔    ✔
+      weibull_max          ✔    ✔    ✔    -    -
+      weibull_min          ✔    ✔    ✔    -    -
+      wrapcauchy           ✔    ✔    -    -    -
 
 * `find_functions_missing_examples.py`: Find functions whose docstring is
   missing the "Examples" section.
