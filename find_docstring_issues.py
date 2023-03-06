@@ -43,7 +43,7 @@ def get_headings(docstring):
 def check_headings(docstring, args):
     result = []
     headings_found = get_headings(docstring)
-    if "See also" in headings_found:
+    if "See also" in headings_found and not args.ignore_see_also_case:
         result.append("'See also' should be 'See Also' "
                       "(according to the standard)")
         idx = headings_found.index('See also')
@@ -160,8 +160,11 @@ if __name__ == "__main__":
         description=('Check SciPy functions for docstring issues'),
     )
     parser.add_argument('modules', nargs='*', default=all_modules)
-    parser.add_argument('-i', '--ignore-missing-returns', action='store_true',
+    parser.add_argument('-r', '--ignore-missing-returns', action='store_true',
                         help="Ignore missing 'Returns' section.")
+    parser.add_argument('-s', '--ignore-see-also-case', action='store_true',
+                        help=('Ignore case discrepancy in the "See Also" '
+                              'section title'))
     args = parser.parse_args()
 
     print(f"scipy version {scipy.__version__}")
