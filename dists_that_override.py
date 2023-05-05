@@ -2,7 +2,7 @@ import argparse
 import math
 from shutil import get_terminal_size
 import scipy
-from scipy.stats import _continuous_distns, rv_continuous
+from scipy.stats import distributions, rv_continuous
 
 
 def print_names(names):
@@ -24,7 +24,7 @@ def overrides(name, target):
     The function returns True if the distribution overrides the default
     implementation of the method.
     """
-    instance_method = getattr(getattr(_continuous_distns, name).__class__,
+    instance_method = getattr(getattr(distributions, name).__class__,
                               target)
     class_method = getattr(rv_continuous, target)
     return instance_method != class_method
@@ -48,14 +48,14 @@ def main():
     print(f'SciPy version {scipy.__version__}')
     print()
 
-    dist_names = [name for name in dir(_continuous_distns)
-                  if isinstance(getattr(_continuous_distns, name),
+    dist_names = [name for name in dir(distributions)
+                  if isinstance(getattr(distributions, name),
                                 rv_continuous)]
 
     if len(args.method) == 1:
         target = args.method[0]
-        dist_names = [name for name in dir(_continuous_distns)
-                      if isinstance(getattr(_continuous_distns, name),
+        dist_names = [name for name in dir(distributions)
+                      if isinstance(getattr(distributions, name),
                                     rv_continuous)]
         with_override = [name for name in dist_names
                          if overrides(name, target)]
