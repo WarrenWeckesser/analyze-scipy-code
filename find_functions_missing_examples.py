@@ -21,7 +21,7 @@ modules = ['cluster.hierarchy', 'cluster.vq', 'constants', 'datasets', 'fft',
            'special', 'stats', 'stats.contingency', 'stats.mstats']
 
 skip = ['integrate.cumtrapz', 'integrate.simps', 'integrate.trapz',
-        'ndimage.sum']
+        'ndimage.sum', 'signal.cmplx_sort']
 
 print(f"scipy version {scipy.__version__}")
 print()
