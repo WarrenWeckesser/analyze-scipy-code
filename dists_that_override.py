@@ -37,12 +37,16 @@ def main():
                      'override methods'),
     )
     parser.add_argument('-s', '--support', action='store_true',
-                        help=('show the support of the distribution in the '
-                              'output'))
+                        help=('Show the standard support of the distribution '
+                              'in the output.  (For some distributions, the '
+                              'support depends on the parameters. This output '
+                              'will not reflect all the possibilities for '
+                              'such distributions.)'))
     parser.add_argument('-i', '--infinite-support', action='store_true',
-                        help=('show only distributions that have infinite '
-                              'support'))
-    parser.add_argument('method', type=str, nargs='+', help='methods to check')
+                        help=('Show only distributions that have infinite '
+                              'support.'))
+    parser.add_argument('method', type=str, nargs='+',
+                        help='Method to check for override.')
     args = parser.parse_args()
 
     print(f'SciPy version {scipy.__version__}')
