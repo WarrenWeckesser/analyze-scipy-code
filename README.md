@@ -65,9 +65,11 @@ Assorted scripts that I use to analyze the SciPy source code.
       $ cat example_logsumexp.py
       # Python code extracted from the 'Examples' section of
       # scipy.special.logsumexp
+      # SciPy version: 1.15.0.dev0+git20240827.d4be0ae
 
       import numpy as np
       from scipy.special import logsumexp
+
       a = np.arange(10)
       logsumexp(a)
       np.log(np.sum(np.exp(a)))
