@@ -28,10 +28,18 @@ has_plot = False
 has_show = False
 ds = NumpyDocString(docstring)
 code = []
+prev_import = True
 for line in ds['Examples']:
     line = line.strip()
     if line.startswith('>>> ') or line.startswith('... '):
         codeline = line[4:]
+        if "import" in codeline:
+            if not prev_import:
+                code.append('')
+                prev_import = True
+        elif prev_import:
+            code.append('')
+            prev_import = False
         if "plt" in codeline:
             has_plot = True
         if "plt.show()" in codeline:
@@ -43,7 +51,8 @@ if has_plot and not has_show:
 filename = f'example_{parts[-1]}.py'
 with open(filename, 'w') as f:
     f.write(f"# Python code extracted from the 'Examples' section of\n"
-            f"# {fullname}\n\n")
+            f"# {fullname}\n")
+    f.write(f'# SciPy version: {scipy.__version__}\n\n')
     f.write('\n'.join(code))
     f.write('\n')
 
