@@ -22,9 +22,10 @@ def is_missing_import_np(docstring):
 
 
 modules = ['cluster.hierarchy', 'cluster.vq', 'constants', 'datasets',
+           'differentiate',
            'fft', 'fftpack',
            'integrate', 'interpolate', 'io', 'io.arff', 'io.wavfile',
-           'linalg', 'misc', 'ndimage', 'odr', 'optimize',
+           'linalg', 'ndimage', 'odr', 'optimize',
            'signal', 'signal.windows',
            'sparse', 'sparse.linalg', 'sparse.csgraph',
            'spatial', 'spatial.distance', 'spatial.transform',
