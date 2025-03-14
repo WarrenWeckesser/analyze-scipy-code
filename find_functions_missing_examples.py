@@ -11,7 +11,7 @@ import scipy
 from scipy._lib.uarray import _Function
 
 
-# Note: fftpack is intentionally not included.
+# Note: fftpack and stats.mstats are intentionally not included.
 modules = ["cluster.hierarchy", "cluster.vq", "constants", "datasets",
            "differentiate", "fft",
            "integrate", "interpolate", "io", "io.arff", "io.wavfile",
@@ -19,7 +19,7 @@ modules = ["cluster.hierarchy", "cluster.vq", "constants", "datasets",
            "signal", "signal.windows",
            "sparse", "sparse.linalg", "sparse.csgraph",
            "spatial", "spatial.distance", "spatial.transform",
-           "special", "stats", "stats.contingency", "stats.mstats"]
+           "special", "stats", "stats.contingency"]
 
 skip = ["integrate.cumtrapz", "integrate.simps", "integrate.trapz",
         "ndimage.sum", "signal.cmplx_sort"]
