@@ -2,7 +2,7 @@ import argparse
 import math
 from shutil import get_terminal_size
 import scipy
-from scipy.stats import distributions, rv_continuous
+from scipy.stats import distributions, rv_continuous, rv_discrete
 
 
 def print_names(names):
@@ -24,16 +24,18 @@ def overrides(name, target):
     The function returns True if the distribution overrides the default
     implementation of the method.
     """
-    instance_method = getattr(getattr(distributions, name).__class__,
-                              target)
-    class_method = getattr(rv_continuous, target)
+    dist = getattr(distributions, name)
+    cls = dist.__class__
+    instance_method = getattr(cls, target)
+    base = cls.__base__
+    class_method = getattr(base, target)
     return instance_method != class_method
 
 
 def main():
     parser = argparse.ArgumentParser(
         prog='dists_that_override',
-        description=('Show which SciPy continuous univariate distributions '
+        description=('Show which SciPy univariate distributions '
                      'override methods'),
     )
     parser.add_argument('-s', '--support', action='store_true',
@@ -45,6 +47,10 @@ def main():
     parser.add_argument('-i', '--infinite-support', action='store_true',
                         help=('Show only distributions that have infinite '
                               'support.'))
+    parser.add_argument('-d', '--discrete', action='store_true',
+                        help=('Check only the discrete distributions. '
+                              '(The default is to check only the continuous '
+                              'distributions.)'))
     parser.add_argument('method', type=str, nargs='+',
                         help='Method to check for override.')
     args = parser.parse_args()
@@ -52,24 +58,31 @@ def main():
     print(f'SciPy version {scipy.__version__}')
     print()
 
+    if args.discrete:
+        cls = rv_discrete
+        cls_descr = "Discrete"
+    else:
+        cls = rv_continuous
+        cls_descr = "Continuous"
+
     dist_names = [name for name in dir(distributions)
                   if isinstance(getattr(distributions, name),
-                                rv_continuous)]
+                                cls)]
 
     if len(args.method) == 1:
         target = args.method[0]
         dist_names = [name for name in dir(distributions)
                       if isinstance(getattr(distributions, name),
-                                    rv_continuous)]
+                                    cls)]
         with_override = [name for name in dist_names
                          if overrides(name, target)]
         without_override = sorted(set(dist_names) - set(with_override))
 
-        print(f"Continuous univariate distributions that override {target}:")
+        print(f"{cls_descr} univariate distributions that override {target}:")
         print_names(with_override)
 
         print()
-        print("Continuous univariate distributions that do not override "
+        print(f"{cls_descr} univariate distributions that do not override "
               f"{target}:")
         print_names(without_override)
     else:
@@ -77,7 +90,7 @@ def main():
         # Make a table with checkboxes for the methods that are overridden.
         if args.infinite_support:
             print('Showing only distributions with infinite support.\n')
-        print(f'{"distribution":21s}', end='')
+        print(f'{"distribution":22s}', end='')
         if args.support:
             print(f'{"support":16s}  ', end='')
         w = 1 + max([len(meth) for meth in args.method])
@@ -89,7 +102,7 @@ def main():
             if (args.infinite_support and
                     math.inf not in [abs(dist.a), abs(dist.b)]):
                 continue
-            print(f'{name:21s}', end='')
+            print(f'{name:22s}', end='')
             if args.support:
                 # Show the default support.
                 print(f'[{dist.a:6.3g}, {dist.b:6.3g}]   ', end='')
