@@ -6,14 +6,14 @@ from scipy.stats import distributions, rv_continuous, rv_discrete
 
 
 def print_names(names):
-    max_name_len = 20
+    max_name_len = 22
     terminal_cols = get_terminal_size().columns
     ncols = (terminal_cols - 4) // max_name_len
     n = len(names)
     nrows, last = divmod(n, ncols)
     for row in range(nrows + int(last > 0)):
         rownames = names[row*ncols:(row+1)*ncols]
-        line = ' '.join(f'{name:19s}' for name in rownames)
+        line = ' '.join(f'{name:{max_name_len}s}' for name in rownames)
         print("   ", line)
 
 
