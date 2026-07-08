@@ -4,6 +4,14 @@ import scipy
 
 
 def extract_example(fullname):
+    """
+    Extract the code from the Examples section of the object specified by fullname.
+
+    Returns the last part of `fullname`, and a list of strings that are the lines of
+    Python code from the Examples section.
+
+    Raises a `RuntimeError` if `fullname` cannot be imported.
+    """
     fullname = fullname.strip()
     parts = fullname.split('.')
     start = '.'.join(parts[:-1])
@@ -54,7 +62,11 @@ if __name__ == "__main__":
     command = sys.argv[1]
     fullname = sys.argv[2].strip()
 
-    name, code = extract_example(fullname)
+    try:
+        name, code = extract_example(fullname)
+    except RuntimeError:
+        print(f"ERROR: Failed to import {fullname}", file=sys.stderr)
+        sys.exit(-1)
 
     if command == 'write':
         # Write the example code to a file.
