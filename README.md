@@ -55,17 +55,19 @@ Assorted scripts that I use to analyze the SciPy source code.
       sparse.vstack
           missing section: 'Returns'
 
-* `extract_example_code.py`: Extract the code from the 'Examples' section
-  of the SciPy object.
+* `extract-example/extract_example_code.py`: Extract the code from the *Examples*
+  section of the docstring of the given SciPy object and either run it or write
+  it to a file.
 
-  For example,
+  For example, this command writes the code in the *Examples* section of
+  `scipy.special.logsumexp` to the file `example_logsumexp.py`.
 
-      $ python extract_example_code.py scipy.special.logsumexp
+      $ python extract_example_code.py write scipy.special.logsumexp
       Code from the 'Examples' section of scipy.special.logsumexp written to 'example_logsumexp.py'.
       $ cat example_logsumexp.py
       # Python code extracted from the 'Examples' section of
       # scipy.special.logsumexp
-      # SciPy version: 1.15.0.dev0+git20240827.d4be0ae
+      # SciPy version: 1.19.0.dev0+git20260708.29feda5
 
       import numpy as np
       from scipy.special import logsumexp
