@@ -59,6 +59,29 @@ def old_extract_example(fullname):
     return parts[-1], code
 
 
+matplotlib_preamble = """
+# matplotlib preamble to match settings in SciPy's doc/source/conf.py
+import matplotlib as mpl
+font_size = 13*72/96.0  # 13 px
+plot_rcparams = {
+    'font.size': font_size,
+    'axes.titlesize': font_size,
+    'axes.labelsize': font_size,
+    'xtick.labelsize': font_size,
+    'ytick.labelsize': font_size,
+    'legend.fontsize': font_size,
+    'figure.figsize': (3*1.62, 3),
+    'figure.subplot.bottom': 0.2,
+    'figure.subplot.left': 0.2,
+    'figure.subplot.right': 0.9,
+    'figure.subplot.top': 0.85,
+    'figure.subplot.wspace': 0.4,
+    'text.usetex': False,
+}
+for key, value in plot_rcparams.items():
+    mpl.rcParams[key] = value
+"""
+
 def extract_example(fullname):
     """
     Extract the code from the Examples section of the object specified by fullname.
@@ -122,6 +145,8 @@ def extract_example(fullname):
             code2.append("")
             prev_import = False
         code2.append(line)
+    if has_plot:
+        code2.insert(0, matplotlib_preamble.lstrip())
     if has_plot and not has_show:
         code2.append('plt.show()')
     return parts[-1], code2
@@ -135,10 +160,12 @@ def irun(code):
     for line in code:
         if line.strip() == '':
             continue
-        lines = line.split('\n')
-        print(f'>>> {lines[0]}')
-        for nextline in lines[1:]:
-            print(f'... {nextline}')
+
+        if not line.startswith('# matplotlib preamble'):
+            lines = line.split('\n')
+            print(f'>>> {lines[0]}')
+            for nextline in lines[1:]:
+                print(f'... {nextline}')
 
         p = ast.parse(line).body
         if len(p) == 0:
