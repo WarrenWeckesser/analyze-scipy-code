@@ -82,6 +82,7 @@ for key, value in plot_rcparams.items():
     mpl.rcParams[key] = value
 """
 
+
 def extract_example(fullname):
     """
     Extract the code from the Examples section of the object specified by fullname.
@@ -152,10 +153,27 @@ def extract_example(fullname):
     return parts[-1], code2
 
 
+def _is_matplotlib_object(obj):
+    # Could check the type (e.g. matplotlib.artist.Artist) instead,
+    # but this works well enough so far.
+    return getattr(obj, '__module__', '').startswith('matplotlib.')
+
+
+def _is_matplotlib_data(obj):
+    if _is_matplotlib_object(obj):
+        return True
+    if isinstance(obj, list) and all(_is_matplotlib_object(item) for item in obj):
+        return True
+    return False
+
+
 def irun(code):
     """
     `code` must be a list of strings, where each string is a line of Python code.
     """
+    # This implementation is somewhat hackish, but it works well enough for the
+    # examples that I've tried.
+
     g = {}
     for line in code:
         if line.strip() == '':
@@ -171,7 +189,8 @@ def irun(code):
         if len(p) == 0:
             continue
         p0 = p[0]
-        if isinstance(p0, (ast.Import, ast.ImportFrom, ast.Assign)):
+        if isinstance(p0, (ast.Import, ast.ImportFrom, ast.Assign,
+                           ast.For, ast.FunctionDef)):
             exec(line, globals=g)
         elif isinstance(p0, ast.Expr):
             tmp = "__tmp = " + line
@@ -183,7 +202,7 @@ def irun(code):
             del g["__tmp"]
             if len(out) > 0:
                 print(out)
-            if value is not None and not line.startswith('plt.'):
+            if value is not None and not _is_matplotlib_data(value):
                 print(repr(value))
         else:
             f = StringIO()
